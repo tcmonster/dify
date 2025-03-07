@@ -483,6 +483,9 @@ services:
       INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: ${INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH:-}
       PM2_INSTANCES: ${PM2_INSTANCES:-2}
       LOOP_NODE_MAX_COUNT: ${LOOP_NODE_MAX_COUNT:-100}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The postgres database.
   db:
@@ -508,6 +511,9 @@ services:
       retries: 30
     ports:
       - '${EXPOSE_DB_PORT:-5432}:5432'
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The redis cache.
   redis:
@@ -522,6 +528,9 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD:-difyai123456}
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The DifySandbox
   sandbox:
@@ -545,6 +554,7 @@ services:
       test: [ 'CMD', 'curl', '-f', 'http://localhost:8194/health' ]
     networks:
       - ssrf_proxy_network
+      - default
 
   # plugin daemon
   plugin_daemon:
@@ -570,6 +580,9 @@ services:
       - ./volumes/plugin_daemon:/app/storage
     depends_on:
       - db
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # ssrf_proxy server
   # for more information, please refer to
@@ -611,6 +624,9 @@ services:
       - CERTBOT_OPTIONS=${CERTBOT_OPTIONS:-}
     entrypoint: [ '/docker-entrypoint.sh' ]
     command: [ 'tail', '-f', '/dev/null' ]
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
@@ -678,6 +694,9 @@ services:
       AUTHENTICATION_APIKEY_USERS: ${WEAVIATE_AUTHENTICATION_APIKEY_USERS:-hello@dify.ai}
       AUTHORIZATION_ADMINLIST_ENABLED: ${WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED:-true}
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@dify.ai}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
@@ -690,6 +709,9 @@ services:
       - ./volumes/qdrant:/qdrant/storage
     environment:
       QDRANT_API_KEY: ${QDRANT_API_KEY:-difyai123456}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The Couchbase vector store.
   couchbase-server:
@@ -723,6 +745,9 @@ services:
       retries: 10
       start_period: 30s
       timeout: 10s
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The pgvector vector database.
   pgvector:
@@ -745,6 +770,9 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # pgvecto-rs vector store
   pgvecto-rs:
@@ -767,6 +795,9 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Chroma vector database
   chroma:
@@ -780,6 +811,9 @@ services:
       CHROMA_SERVER_AUTHN_CREDENTIALS: ${CHROMA_SERVER_AUTHN_CREDENTIALS:-difyai123456}
       CHROMA_SERVER_AUTHN_PROVIDER: ${CHROMA_SERVER_AUTHN_PROVIDER:-chromadb.auth.token_authn.TokenAuthenticationServerProvider}
       IS_PERSISTENT: ${CHROMA_IS_PERSISTENT:-TRUE}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # OceanBase vector database
   oceanbase:
@@ -797,6 +831,9 @@ services:
       OB_TENANT_PASSWORD: ${OCEANBASE_VECTOR_PASSWORD:-difyai123456}
       OB_CLUSTER_NAME: ${OCEANBASE_CLUSTER_NAME:-difyai}
       OB_SERVER_IP: '127.0.0.1'
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Oracle vector database
   oracle:
@@ -812,6 +849,9 @@ services:
     environment:
       ORACLE_PWD: ${ORACLE_PWD:-Dify123456}
       ORACLE_CHARACTERSET: ${ORACLE_CHARACTERSET:-AL32UTF8}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Milvus vector database services
   etcd:
@@ -833,6 +873,8 @@ services:
       timeout: 20s
       retries: 3
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   minio:
@@ -852,6 +894,8 @@ services:
       timeout: 20s
       retries: 3
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   milvus-standalone:
@@ -879,6 +923,8 @@ services:
       - 19530:19530
       - 9091:9091
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   # Opensearch vector database
