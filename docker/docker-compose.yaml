@@ -1019,7 +1019,7 @@ services:
       GS_PORT: ${OPENGAUSS_PORT:-6600}
       GS_DB: ${OPENGAUSS_DATABASE:-dify}
     volumes:
-      - ./volumes/opengauss/data:/var/lib/opengauss/data
+      - ../../files/opengauss/data:/var/lib/opengauss/data
     healthcheck:
       test: ["CMD-SHELL", "netstat -lntp | grep tcp6 > /dev/null 2>&1"]
       interval: 10s
