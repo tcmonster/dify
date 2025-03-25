@@ -8,6 +8,7 @@ const translation = {
     published: 'Published',
     publish: 'Publish',
     update: 'Update',
+    publishUpdate: 'Publish Update',
     run: 'Run',
     running: 'Running',
     inRunMode: 'In Run Mode',
@@ -30,6 +31,8 @@ const translation = {
     latestPublished: 'Latest Published',
     publishedAt: 'Published',
     restore: 'Restore',
+    versionHistory: 'Version History',
+    exitVersions: 'Exit Versions',
     runApp: 'Run App',
     batchRunApp: 'Batch Run App',
     openInExplore: 'Open in Explore',
@@ -104,7 +107,7 @@ const translation = {
     branch: 'BRANCH',
     onFailure: 'On Failure',
     addFailureBranch: 'Add Fail Branch',
-    loadMore: 'Load More Workflows',
+    loadMore: 'Load More',
     noHistory: 'No History',
   },
   env: {
@@ -426,6 +429,34 @@ const translation = {
         url: 'Segmented URL',
         metadata: 'Other metadata',
       },
+      metadata: {
+        title: 'Metadata Filtering',
+        tip: 'Metadata filtering is the process of using metadata attributes (such as tags, categories, or access permissions) to refine and control the retrieval of relevant information within a system.',
+        options: {
+          disabled: {
+            title: 'Disabled',
+            subTitle: 'Not enabling metadata filtering',
+          },
+          automatic: {
+            title: 'Automatic',
+            subTitle: 'Automatically generate metadata filtering conditions based on user query',
+            desc: 'Automatically generate metadata filtering conditions based on Query Variable',
+          },
+          manual: {
+            title: 'Manual',
+            subTitle: 'Manually add metadata filtering conditions',
+          },
+        },
+        panel: {
+          title: 'Metadata Filter Conditions',
+          conditions: 'Conditions',
+          add: 'Add Condition',
+          search: 'Search metadata',
+          placeholder: 'Enter value',
+          datePlaceholder: 'Choose a time...',
+          select: 'Select variable...',
+        },
+      },
     },
     http: {
       inputVars: 'Input Variables',
@@ -514,6 +545,8 @@ const translation = {
         'all of': 'all of',
         'exists': 'exists',
         'not exists': 'not exists',
+        'before': 'before',
+        'after': 'after',
       },
       optionName: {
         image: 'Image',
@@ -670,6 +703,7 @@ const translation = {
       loop_other: '{{count}} Loops',
       currentLoop: 'Current Loop',
       breakCondition: 'Loop Termination Condition',
+      breakConditionTip: 'Only variables within loops with termination conditions and conversation variables can be referenced.',
       loopMaxCount: 'Maximum Loop Count',
       loopMaxCountError: 'Please enter a valid maximum loop count, ranging from 1 to {{maxCount}}',
       errorResponseMethod: 'Error Response Method',
@@ -796,6 +830,38 @@ const translation = {
   },
   tracing: {
     stopBy: 'Stop by {{user}}',
+  },
+  versionHistory: {
+    title: 'Versions',
+    currentDraft: 'Current Draft',
+    latest: 'Latest',
+    filter: {
+      all: 'All',
+      onlyYours: 'Only yours',
+      onlyShowNamedVersions: 'Only show named versions',
+      reset: 'Reset Filter',
+      empty: 'No matching version history found',
+    },
+    defaultName: 'Untitled Version',
+    nameThisVersion: 'Name this version',
+    editVersionInfo: 'Edit version info',
+    editField: {
+      title: 'Title',
+      releaseNotes: 'Release Notes',
+      titleLengthLimit: 'Title can\'t exceed {{limit}} characters',
+      releaseNotesLengthLimit: 'Release notes can\'t exceed {{limit}} characters',
+    },
+    releaseNotesPlaceholder: 'Describe what changed',
+    restorationTip: 'After version restoration, the current draft will be overwritten.',
+    deletionTip: 'Deletion is irreversible, please confirm.',
+    action: {
+      restoreSuccess: 'Version restored',
+      restoreFailure: 'Failed to restore version',
+      deleteSuccess: 'Version deleted',
+      deleteFailure: 'Failed to delete version',
+      updateSuccess: 'Version updated',
+      updateFailure: 'Failed to update version',
+    },
   },
 }
 

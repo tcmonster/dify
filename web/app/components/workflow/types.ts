@@ -339,6 +339,7 @@ export type RunFile = {
   transfer_method: TransferMethod[]
   url?: string
   upload_file_id?: string
+  related_id?: string
 }
 
 export type WorkflowRunningData = {
@@ -410,4 +411,15 @@ export type UploadFileSetting = {
 export type VisionSetting = {
   variable_selector: ValueSelector
   detail: Resolution
+}
+
+export enum WorkflowVersionFilterOptions {
+  all = 'all',
+  onlyYours = 'onlyYours',
+}
+
+export enum VersionHistoryContextMenuOptions {
+  restore = 'restore',
+  edit = 'edit',
+  delete = 'delete',
 }

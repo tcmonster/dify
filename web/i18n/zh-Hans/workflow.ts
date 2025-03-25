@@ -8,6 +8,7 @@ const translation = {
     published: '已发布',
     publish: '发布',
     update: '更新',
+    publishUpdate: '发布更新',
     run: '运行',
     running: '运行中',
     inRunMode: '在运行模式中',
@@ -30,6 +31,8 @@ const translation = {
     latestPublished: '最新发布',
     publishedAt: '发布于',
     restore: '恢复',
+    versionHistory: '版本历史',
+    exitVersions: '退出版本历史',
     runApp: '运行',
     batchRunApp: '批量运行',
     accessAPIReference: '访问 API',
@@ -427,6 +430,34 @@ const translation = {
         url: '分段链接',
         metadata: '其他元数据',
       },
+      metadata: {
+        title: '元数据过滤',
+        tip: '元数据过滤是使用元数据属性（例如标签、类别或访问权限）来细化和控制系统内相关信息的检索过程。',
+        options: {
+          disabled: {
+            title: '禁用',
+            subTitle: '禁用元数据过滤',
+          },
+          automatic: {
+            title: '自动',
+            subTitle: '根据用户查询自动生成元数据过滤条件',
+            desc: '根据 Query Variable 自动生成元数据过滤条件',
+          },
+          manual: {
+            title: '手动',
+            subTitle: '手动添加元数据过滤条件',
+          },
+        },
+        panel: {
+          title: '元数据过滤条件',
+          conditions: '条件',
+          add: '添加条件',
+          search: '搜索元数据',
+          placeholder: '输入值',
+          datePlaceholder: '选择日期...',
+          select: '选择变量...',
+        },
+      },
     },
     http: {
       inputVars: '输入变量',
@@ -515,6 +546,8 @@ const translation = {
         'all of': '全部是',
         'exists': '存在',
         'not exists': '不存在',
+        'before': '早于',
+        'after': '晚于',
       },
       optionName: {
         image: '图片',
@@ -671,6 +704,7 @@ const translation = {
       loop_other: '{{count}} 个循环',
       currentLoop: '当前循环',
       breakCondition: '循环终止条件',
+      breakConditionTip: '支持引用终止条件循环内的变量和会话变量。',
       loopMaxCount: '最大循环次数',
       loopMaxCountError: '请输入正确的 最大循环次数，范围为 1 到 {{maxCount}}',
       errorResponseMethod: '错误响应方法',
@@ -797,6 +831,38 @@ const translation = {
   },
   tracing: {
     stopBy: '由{{user}}终止',
+  },
+  versionHistory: {
+    title: '版本',
+    currentDraft: '当前草稿',
+    latest: '最新',
+    filter: {
+      all: '全部',
+      onlyYours: '仅你的',
+      onlyShowNamedVersions: '只显示已命名版本',
+      reset: '重置',
+      empty: '没有匹配的版本',
+    },
+    defaultName: '未命名',
+    nameThisVersion: '命名',
+    editVersionInfo: '编辑信息',
+    editField: {
+      title: '标题',
+      releaseNotes: '发布说明',
+      titleLengthLimit: '标题不能超过{{limit}}个字符',
+      releaseNotesLengthLimit: '发布说明不能超过{{limit}}个字符',
+    },
+    releaseNotesPlaceholder: '请描述变更',
+    restorationTip: '版本回滚后，当前草稿将被覆盖。',
+    deletionTip: '删除不可逆，请确认。',
+    action: {
+      restoreSuccess: '回滚成功',
+      restoreFailure: '回滚失败',
+      deleteSuccess: '版本已删除',
+      deleteFailure: '删除失败',
+      updateSuccess: '版本信息已更新',
+      updateFailure: '更新失败',
+    },
   },
 }
 
