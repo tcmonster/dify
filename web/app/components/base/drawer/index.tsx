@@ -8,7 +8,9 @@ import cn from '@/utils/classnames'
 export type IDrawerProps = {
   title?: string
   description?: string
-  panelClassname?: string
+  dialogClassName?: string
+  dialogBackdropClassName?: string
+  panelClassName?: string
   children: React.ReactNode
   footer?: React.ReactNode
   mask?: boolean
@@ -25,7 +27,9 @@ export type IDrawerProps = {
 export default function Drawer({
   title = '',
   description = '',
-  panelClassname = '',
+  dialogClassName = '',
+  dialogBackdropClassName = '',
+  panelClassName = '',
   children,
   footer,
   mask = true,
@@ -43,18 +47,22 @@ export default function Drawer({
     <Dialog
       unmount={unmount}
       open={isOpen}
-      onClose={() => !clickOutsideNotOpen && onClose()}
-      className="fixed inset-0 z-30 overflow-y-auto"
+      onClose={() => {
+        if (!clickOutsideNotOpen)
+          onClose()
+      }}
+      className={cn('fixed inset-0 z-[30] overflow-y-auto', dialogClassName)}
     >
       <div className={cn('flex h-screen w-screen justify-end', positionCenter && '!justify-center')}>
         {/* mask */}
         <DialogBackdrop
-          className={cn('fixed inset-0 z-40', mask && 'bg-black bg-opacity-30')}
+          className={cn('fixed inset-0 z-[40]', mask && 'bg-black/30', dialogBackdropClassName)}
           onClick={() => {
-            !clickOutsideNotOpen && onClose()
+            if (!clickOutsideNotOpen)
+              onClose()
           }}
         />
-        <div className={cn('relative z-50 flex w-full max-w-sm flex-col justify-between overflow-hidden bg-components-panel-bg p-6 text-left align-middle shadow-xl', panelClassname)}>
+        <div className={cn('relative z-[50] flex w-full max-w-sm flex-col justify-between overflow-hidden bg-components-panel-bg p-6 text-left align-middle shadow-xl', panelClassName)}>
           <>
             <div className='flex justify-between'>
               {title && <DialogTitle
@@ -76,11 +84,11 @@ export default function Drawer({
               <Button
                 className='mr-2'
                 onClick={() => {
-                  onCancel && onCancel()
+                  onCancel?.()
                 }}>{t('common.operation.cancel')}</Button>
               <Button
                 onClick={() => {
-                  onOk && onOk()
+                  onOk?.()
                 }}>{t('common.operation.save')}</Button>
             </div>)}
         </div>

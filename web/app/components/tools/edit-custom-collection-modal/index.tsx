@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDebounce, useGetState } from 'ahooks'
 import { RiSettings2Line } from '@remixicon/react'
-import produce from 'immer'
+import { produce } from 'immer'
 import { LinkExternal02 } from '../../base/icons/src/vender/line/general'
 import type { Credential, CustomCollectionBackend, CustomParamSchema, Emoji } from '../types'
 import { AuthHeaderPrefix, AuthType } from '../types'
@@ -98,7 +98,7 @@ const EditCustomCollectionModal: FC<Props> = ({
         setCustomCollection(newCollection)
         setParamsSchemas(parameters_schema)
       }
-      catch (e) {
+      catch {
         const customCollection = getCustomCollection()
         const newCollection = produce(customCollection, (draft) => {
           draft.schema_type = ''
@@ -174,7 +174,7 @@ const EditCustomCollectionModal: FC<Props> = ({
       const path = decodeURI(new URL(url).pathname)
       return path || ''
     }
-    catch (e) {
+    catch {
       return url
     }
   }

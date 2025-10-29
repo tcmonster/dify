@@ -3,17 +3,19 @@ import type { FC } from 'react'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useContext } from 'use-context-selector'
-import produce from 'immer'
+import { produce } from 'immer'
 import {
   RiAddLine,
   RiCloseLine,
 } from '@remixicon/react'
 import { useMount } from 'ahooks'
 import type { Collection, CustomCollectionBackend, Tool } from '../types'
+import type { CollectionType } from '../types'
 import Type from './type'
 import Category from './category'
 import Tools from './tools'
 import cn from '@/utils/classnames'
+import { basePath } from '@/utils/var'
 import I18n from '@/context/i18n'
 import Drawer from '@/app/components/base/drawer'
 import Button from '@/app/components/base/button'
@@ -57,6 +59,12 @@ const AddToolModal: FC<Props> = ({
   const getAllTools = async () => {
     setListLoading(true)
     const buildInTools = await fetchAllBuiltInTools()
+    if (basePath) {
+      buildInTools.forEach((item) => {
+        if (typeof item.icon == 'string' && !item.icon.includes(basePath))
+          item.icon = `${basePath}${item.icon}`
+      })
+    }
     const customTools = await fetchAllCustomTools()
     const workflowTools = await fetchAllWorkflowTools()
     const mergedToolList = [
@@ -122,7 +130,7 @@ const AddToolModal: FC<Props> = ({
     const nexModelConfig = produce(modelConfig, (draft: ModelConfig) => {
       draft.agentConfig.tools.push({
         provider_id: collection.id || collection.name,
-        provider_type: collection.type,
+        provider_type: collection.type as CollectionType,
         provider_name: collection.name,
         tool_name: tool.name,
         tool_label: tool.label[locale] || tool.label[locale.replaceAll('-', '_')],
@@ -171,7 +179,7 @@ const AddToolModal: FC<Props> = ({
         clickOutsideNotOpen
         onClose={onHide}
         footer={null}
-        panelClassname={cn('mx-2 mb-3 mt-16 rounded-xl !p-0 sm:mr-2', 'mt-2 !w-[640px]', '!max-w-[640px]')}
+        panelClassName={cn('mx-2 mb-3 mt-16 rounded-xl !p-0 sm:mr-2', 'mt-2 !w-[640px]', '!max-w-[640px]')}
       >
         <div
           className='flex w-full rounded-xl border-[0.5px] border-gray-200 bg-white shadow-xl'
