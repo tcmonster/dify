@@ -714,6 +714,10 @@ services:
       ENABLE_WEBSITE_JINAREADER: ${ENABLE_WEBSITE_JINAREADER:-true}
       ENABLE_WEBSITE_FIRECRAWL: ${ENABLE_WEBSITE_FIRECRAWL:-true}
       ENABLE_WEBSITE_WATERCRAWL: ${ENABLE_WEBSITE_WATERCRAWL:-true}
+    networks:
+      - ssrf_proxy_network
+      - default
+
   # The postgres database.
   db:
     image: postgres:15-alpine
@@ -748,6 +752,9 @@ services:
       interval: 1s
       timeout: 3s
       retries: 60
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The redis cache.
   redis:
@@ -790,6 +797,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8194/health"]
     networks:
       - ssrf_proxy_network
+      - default
 
   # plugin daemon
   plugin_daemon:
@@ -851,6 +859,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # ssrf_proxy server
   # for more information, please refer to
@@ -897,6 +908,9 @@ services:
       - CERTBOT_OPTIONS=${CERTBOT_OPTIONS:-}
     entrypoint: ["/docker-entrypoint.sh"]
     command: ["tail", "-f", "/dev/null"]
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
@@ -942,6 +956,9 @@ services:
     ports:
       - "${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}"
       - "${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}"
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The Weaviate vector store.
   weaviate:
@@ -965,6 +982,9 @@ services:
       AUTHENTICATION_APIKEY_USERS: ${WEAVIATE_AUTHENTICATION_APIKEY_USERS:-hello@dify.ai}
       AUTHORIZATION_ADMINLIST_ENABLED: ${WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED:-true}
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@dify.ai}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
@@ -977,6 +997,9 @@ services:
       - ../../files/qdrant:/qdrant/storage
     environment:
       QDRANT_API_KEY: ${QDRANT_API_KEY:-difyai123456}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The Couchbase vector store.
   couchbase-server:
@@ -1014,6 +1037,9 @@ services:
       retries: 10
       start_period: 30s
       timeout: 10s
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # The pgvector vector database.
   pgvector:
@@ -1041,6 +1067,9 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # get image from https://www.vastdata.com.cn/
   vastbase:
@@ -1087,6 +1116,9 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Chroma vector database
   chroma:
@@ -1100,6 +1132,9 @@ services:
       CHROMA_SERVER_AUTHN_CREDENTIALS: ${CHROMA_SERVER_AUTHN_CREDENTIALS:-difyai123456}
       CHROMA_SERVER_AUTHN_PROVIDER: ${CHROMA_SERVER_AUTHN_PROVIDER:-chromadb.auth.token_authn.TokenAuthenticationServerProvider}
       IS_PERSISTENT: ${CHROMA_IS_PERSISTENT:-TRUE}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # OceanBase vector database
   oceanbase:
@@ -1132,6 +1167,9 @@ services:
       retries: 30
       start_period: 30s
       timeout: 10s
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Oracle vector database
   oracle:
@@ -1147,6 +1185,9 @@ services:
     environment:
       ORACLE_PWD: ${ORACLE_PWD:-Dify123456}
       ORACLE_CHARACTERSET: ${ORACLE_CHARACTERSET:-AL32UTF8}
+    networks:
+      - ssrf_proxy_network
+      - default
 
   # Milvus vector database services
   etcd:
@@ -1168,6 +1209,8 @@ services:
       timeout: 20s
       retries: 3
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   minio:
@@ -1187,6 +1230,8 @@ services:
       timeout: 20s
       retries: 3
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   milvus-standalone:
@@ -1214,6 +1259,8 @@ services:
       - 19530:19530
       - 9091:9091
     networks:
+      - ssrf_proxy_network
+      - default
       - milvus
 
   # Opensearch vector database
